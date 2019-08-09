@@ -1,7 +1,7 @@
 
 # git Cheat Sheet
 
-by [Ben Nadel](https://www.bennadel.com) for _future Ben Nadel_
+by [Ben Nadel](https://www.bennadel.com) for _future Ben Nadel_, modified by [unixAG Zweibrücken](https://unixag.net)
 
 The [`git` API is so vast](https://git-scm.com/docs) and so esoteric, I can barely manage to keep a fraction of one-percent of it in my head. As such, I wanted to outline a few of the commands that I commonly (and sometimes uncommonly) reach for. This way, when I inevitably get stuck and my brain fails me, I have something that I can refer back to.
 
@@ -9,40 +9,40 @@ Future Ben, you are welcome!
 
 ## Table of Contents
 
-* [I want to show the status of the current branch.](#i-want-to-show-the-status-of-the-current-branch)
-* [I want to create a new branch that is based on the current branch.](#i-want-to-create-a-new-branch-that-is-based-on-the-current-branch)
-* [I want to checkout the previous branch that I was on.](#i-want-to-checkout-the-previous-branch-that-i-was-on)
-* [I want to list the files that have been modified in the current working tree.](#i-want-to-list-the-files-that-have-been-modified-in-the-current-working-tree)
-* [I want to view the changes that were made in a given commit.](#i-want-to-view-the-changes-that-were-made-in-a-given-commit)
-* [I want to list the files that were changed in a given commit.](#i-want-to-list-the-files-that-were-changed-in-a-given-commit)
-* [I want to view the changes that were made across multiple commits.](#i-want-to-view-the-changes-that-were-made-across-multiple-commits)
-* [I want to view the changes that were made in a given file.](#i-want-to-view-the-changes-that-were-made-in-a-given-file)
-* [I want to view the contents of a file in a given commit.](#i-want-to-view-the-contents-of-a-file-in-a-given-commit)
-* [I want to open the contents of a file in a given commit in my editor.](#i-want-to-open-the-contents-of-a-file-in-a-given-commit-in-my-editor)
-* [I want to copy a file from a given commit into my current working tree.](#i-want-to-copy-a-file-from-a-given-commit-into-my-current-working-tree)
-* [I want to copy the last commit from another branch into my branch.](#i-want-to-copy-the-last-commit-from-another-branch-into-my-branch)
-* [I want to copy an earlier commit from the current branch to the `head`.](#i-want-to-copy-an-earlier-commit-from-the-current-branch-to-the-head)
-* [I want to update the files in the current commit.](#i-want-to-update-the-files-in-the-current-commit)
-* [I want to edit the current commit message.](#i-want-to-edit-the-current-commit-message)
-* [I want to copy `master` into my feature branch.](#i-want-to-copy-master-into-my-feature-branch)
-* [I want to revert the merge of my feature branch into `master`.](#i-want-to-revert-the-merge-of-my-feature-branch-into-master)
-* [I want to extract changes that I accidentally made to `master`.](#i-want-to-extract-changes-that-i-accidentally-made-to-master)
-* [I want to undo the changes that I've made to my branch.](#i-want-to-undo-the-changes-that-ive-made-to-my-branch)
-* [I want to remove unpublished changes from my branch.](#i-want-to-remove-unpublished-changes-from-my-branch)
-* [I want to see which branches have already been merged into `master`.](#i-want-to-see-which-branches-have-already-been-merged-into-master)
-* [I want to see which branches have not yet been merged into `master`.](#i-want-to-see-which-branches-have-not-yet-been-merged-into-master)
-* [I want to delete my feature branch.](#i-want-to-delete-my-feature-branch)
-* [I want to delete a remote branch.](#i-want-to-delete-a-remote-branch)
-* [I want to update `master` because my `push` was rejected.](#i-want-to-update-master-because-my-push-was-rejected)
-* [I want to remove a file from my staging area.](#i-want-to-remove-a-file-from-my-staging-area)
-* [I want to squash several commits into one (or more) commits.](#i-want-to-squash-several-commits-into-one-or-more-commits)
-* [I want to squash several commits into one commit without using `rebase`.](#i-want-to-squash-several-commits-into-one-commit-without-using-rebase)
-* [I want to temporarily set-aside my feature work.](#i-want-to-temporarily-set-aside-my-feature-work)
-* [I want to keep my changes during conflict resolution.](#i-want-to-keep-my-changes-during-conflict-resolution)
+* [Show the status of the current branch.](#show-the-status-of-the-current-branch)
+* [Create a new branch that is based on the current branch.](#create-a-new-branch-that-is-based-on-the-current-branch)
+* [Checkout the previous branch that I was on.](#checkout-the-previous-branch-that-i-was-on)
+* [List the files that have been modified in the current working tree.](#list-the-files-that-have-been-modified-in-the-current-working-tree)
+* [View the changes that were made in a given commit.](#view-the-changes-that-were-made-in-a-given-commit)
+* [List the files that were changed in a given commit.](#list-the-files-that-were-changed-in-a-given-commit)
+* [View the changes that were made across multiple commits.](#view-the-changes-that-were-made-across-multiple-commits)
+* [View the changes that were made in a given file.](#view-the-changes-that-were-made-in-a-given-file)
+* [View the contents of a file in a given commit.](#view-the-contents-of-a-file-in-a-given-commit)
+* [Open the contents of a file in a given commit in my editor.](#open-the-contents-of-a-file-in-a-given-commit-in-my-editor)
+* [Copy a file from a given commit into my current working tree.](#copy-a-file-from-a-given-commit-into-my-current-working-tree)
+* [Copy the last commit from another branch into my branch.](#copy-the-last-commit-from-another-branch-into-my-branch)
+* [Copy an earlier commit from the current branch to the `head`.](#copy-an-earlier-commit-from-the-current-branch-to-the-head)
+* [Update the files in the current commit.](#update-the-files-in-the-current-commit)
+* [Edit the current commit message.](#edit-the-current-commit-message)
+* [Copy `master` into my feature branch.](#copy-master-into-my-feature-branch)
+* [Revert the merge of my feature branch into `master`.](#revert-the-merge-of-my-feature-branch-into-master)
+* [Extract changes that I accidentally made to `master`.](#extract-changes-that-i-accidentally-made-to-master)
+* [Undo the changes that I've made to my branch.](#undo-the-changes-that-ive-made-to-my-branch)
+* [Remove unpublished changes from my branch.](#remove-unpublished-changes-from-my-branch)
+* [See which branches have already been merged into `master`.](#see-which-branches-have-already-been-merged-into-master)
+* [See which branches have not yet been merged into `master`.](#see-which-branches-have-not-yet-been-merged-into-master)
+* [Delete my feature branch.](#delete-my-feature-branch)
+* [Delete a remote branch.](#delete-a-remote-branch)
+* [Update `master` because my `push` was rejected.](#update-master-because-my-push-was-rejected)
+* [Remove a file from my staging area.](#remove-a-file-from-my-staging-area)
+* [Squash several commits into one (or more) commits.](#squash-several-commits-into-one-or-more-commits)
+* [Squash several commits into one commit without using `rebase`.](#squash-several-commits-into-one-commit-without-using-rebase)
+* [Temporarily set-aside my feature work.](#temporarily-set-aside-my-feature-work)
+* [Keep my changes during conflict resolution.](#keep-my-changes-during-conflict-resolution)
 
 ## Use Cases
 
-### I want to show the status of the current branch.
+### Show the status of the current branch.
 
 The `status` command shows differences between the working tree, the index, and `head` commit.
 
@@ -50,7 +50,7 @@ The `status` command shows differences between the working tree, the index, and 
 git status
 ```
 
-### I want to create a new branch that is based on the current branch.
+### Create a new branch that is based on the current branch.
 
 In general, you want to implement new features in short-lived "feature branches" so that changes can be isolated. You can use the `checkout` command to create a new branch based on the current branch:
 
@@ -61,7 +61,7 @@ git checkout master
 git checkout -b my-feature
 ```
 
-### I want to checkout the previous branch that I was on.
+### Checkout the previous branch that I was on.
 
 In some of the `git` commands, the `-` token refers to the "last branch" that you had checked-out. This makes it very easy to jump back-and-forth between two branches:
 
@@ -103,7 +103,7 @@ git checkout master
 git cherry-pick -
 ```
 
-### I want to list the files that have been modified in the current working tree.
+### List the files that have been modified in the current working tree.
 
 By default, when you call `git diff`, you see all of the content that has been modified in the current working tree (and not yet staged). However, you can use the `--stat` modifier to simply list the files that have been modified:
 
@@ -111,7 +111,7 @@ By default, when you call `git diff`, you see all of the content that has been m
 git diff --stat
 ```
 
-### I want to view the changes that were made in a given commit.
+### View the changes that were made in a given commit.
 
 When `show` is given a branch name, it will default to `head` - the last or most-recent commit on the given branch:
 
@@ -144,7 +144,7 @@ git show my-feature~~
 git show my-feature~~~
 ```
 
-### I want to list the files that were changed in a given commit.
+### List the files that were changed in a given commit.
 
 Just as with `git diff`, you can limit the output of the `git show` command using the `--stat` modifier. This will list the files that were changed in the given commit:
 
@@ -153,7 +153,7 @@ Just as with `git diff`, you can limit the output of the `git show` command usin
 git show 19e771 --stat
 ```
 
-### I want to view the changes that were made across multiple commits.
+### View the changes that were made across multiple commits.
 
 While the `show` command can show you changes in a given commit, you can use the `diff` command to show changes across multiple commits:
 
@@ -181,7 +181,7 @@ git diff master..head
 git diff master..my-feature
 ```
 
-### I want to view the changes that were made in a given file.
+### View the changes that were made in a given file.
 
 By default, the `show` command shows all of the changes in a given commit. You can limit the scope of the output by using the `--` modifier and identifying a filepath:
 
@@ -194,7 +194,7 @@ git show my-feature -- README.md
 git show 19e771 -- README.md
 ```
 
-### I want to view the contents of a file in a given commit.
+### View the contents of a file in a given commit.
 
 By default, the `show` command shows you the changes made to a file in a given commit. However, if you want to view the entire contents of a file as defined at that time of a given commit, regardless of the changes made in that particular commit, you can use the `:` modifier to identify a filepath:
 
@@ -208,7 +208,7 @@ git show my-feature:README.md
 git show 19e771:README.md
 ```
 
-### I want to open the contents of a file in a given commit in my editor.
+### Open the contents of a file in a given commit in my editor.
 
 Since you're working on the command-line, the output of any git-command can be piped into another command. As such, you can use the `show` command to open a previous commit's file-content in your editor or viewer of choice:
 
@@ -221,7 +221,7 @@ git show my-feature:README.md | subl
 git show 19e771:README.md | less
 ```
 
-### I want to copy a file from a given commit into my current working tree.
+### Copy a file from a given commit into my current working tree.
 
 Normally, the `checkout` command will update the entire working tree to point to a given commit. However, you can use the `--` modifier to copy (or checkout) a single file from the given commit into your working tree:
 
@@ -234,7 +234,7 @@ git checkout my-feature
 git checkout master -- README.md
 ```
 
-### I want to copy the last commit from another branch into my branch.
+### Copy the last commit from another branch into my branch.
 
 When you don't want to merge a branch into your current working tree, you can use the `cherry-pick` command to copy specific commit-changes into your working tree. Doing so creates a new commit on top of the current branch:
 
@@ -246,7 +246,7 @@ git checkout master
 git cherry-pick my-feature
 ```
 
-### I want to copy an earlier commit from the current branch to the `head`.
+### Copy an earlier commit from the current branch to the `head`.
 
 Sometimes, after you understand why reverted code was breaking, you want to bring the reverted code back into play and then fix it. You _could_ use the `revert` command in order to "revert the revert"; but, such terminology is unattractive. As such, you can `cherry-pick` the reverted commit to bring it back into the `head` where you can then fix it and commit it:
 
@@ -260,7 +260,7 @@ git cherry-pick head~~~
 git cherry-pick 19e771
 ```
 
-### I want to update the files in the current commit.
+### Update the files in the current commit.
 
 If you want to make changes to a commit after you've already committed the changes in your current working tree, you can use the `--amend` modifier. This will add any staged changes to the existing commit.
 
@@ -276,7 +276,7 @@ git add oops.txt
 git commit --amend
 ```
 
-### I want to edit the current commit message.
+### Edit the current commit message.
 
 In addition to adding files to the current commit, the `--amend` modifier can also be used to change the current commit message:
 
@@ -290,7 +290,7 @@ git commit --amend -m "This is great."
 
 Note that if you omit the `-m message` portion of this command, you will be able to edit the commit message in your configured editor.
 
-### I want to copy `master` into my feature branch.
+### Copy `master` into my feature branch.
 
 At first, you may be tempted to simply `merge` your `master` branch into your feature branch, but doing so will create an unattactive, non-intuitive, Frankensteinian commit tree. Instead, you should `rebase` your feature branch on `master`. This will ensure that your feature commits are cleanly colocated in the commit tree and align more closely with a human mental model:
 
@@ -329,7 +329,7 @@ git merge --no-ff my-feature
 
 Now, if the merge needs to be reverted, you can simply revert the "merge commit" and all commits associated with the merge will be reverted.
 
-### I want to revert the merge of my feature branch into `master`.
+### Revert the merge of my feature branch into `master`.
 
 If you performed a `--ff-only` merge of your feature branch into `master`, there's no "easy" solution. You either have to reset the branch to an earlier commit (rewriting history); or, you have to revert the individual commits in the merge.
 
@@ -349,7 +349,7 @@ git revert -m 1 head
 git revert -m 1 master
 ```
 
-### I want to extract changes that I accidentally made to `master`.
+### Extract changes that I accidentally made to `master`.
 
 Sometimes, after you've finished working on your feature branch, you execute `git checkout master`, only find that you've been accidentally working on `master` the whole time (error: "Already on 'master'"). To fix this, you can `checkout` a new branch and `reset` your `master` branch:
 
@@ -368,7 +368,7 @@ git checkout master
 git reset --hard origin/master
 ```
 
-### I want to undo the changes that I've made to my branch.
+### Undo the changes that I've made to my branch.
 
 If you've edited some files and then change your mind about keeping those edits, you can reset the branch using the `--hard` modifier. This will update the working tree - your file structure - to match the structure of the last commit on the branch (`head`).
 
@@ -385,7 +385,7 @@ git reset --hard
 
 If you call `git reset` without the `--hard` option, it will reset the staging to match the `head` of the branch, but it will leave your file system in place. As such, you will be left with "unstaged changes" that can be modified and re-committed.
 
-### I want to remove unpublished changes from my branch.
+### Remove unpublished changes from my branch.
 
 If you've committed changes to the local copy of a remote (ie, published) branch, but you want to undo those changes, you can `reset` the local branch to match the remote branch:
 
@@ -402,7 +402,7 @@ git fetch origin my-feature
 git reset --hard origin/my-feature
 ```
 
-### I want to see which branches have already been merged into `master`.
+### See which branches have already been merged into `master`.
 
 From any branch, you can locate the merged-in branches (that can be safely deleted) by using the `--merged` modifier:
 
@@ -414,7 +414,7 @@ git checkout master
 git branch --merged
 ```
 
-### I want to see which branches have not yet been merged into `master`.
+### See which branches have not yet been merged into `master`.
 
 From any branch, you can locate the unmerged branches by using the `--no-merged` modifier:
 
@@ -426,7 +426,7 @@ git checkout master
 git branch --no-merged
 ```
 
-### I want to delete my feature branch.
+### Delete my feature branch.
 
 After you're merged your feature branch into `master`, you can delete your feature branch using the `branch` command:
 
@@ -451,7 +451,7 @@ git checkout master
 git branch -D my-feature
 ```
 
-### I want to delete a remote branch.
+### Delete a remote branch.
 
 When you delete a branch using `git branch -d`, it deletes your local copy; but, it doesn't delete the remote copy from your origin (ex, GitHub). To delete the remote copy, you have to `push` the branch using the `:` prefix:
 
@@ -467,7 +467,7 @@ git branch -d my-feature
 git push origin :my-feature
 ```
 
-### I want to update `master` because my `push` was rejected.
+### Update `master` because my `push` was rejected.
 
 If you've committed changes to `master` but you forgot to `pull` recent changes from the remote `master` branch, your next `push` will be rejected with an error that looks like, _"Updates were rejected because the tip of your current branch is behind its remote counterpart"_. To fix this, you can use the `--rebase` modifier:
 
@@ -486,7 +486,7 @@ git pull --rebase
 git push origin master
 ```
 
-### I want to remove a file from my staging area.
+### Remove a file from my staging area.
 
 If you accidentally added too many files to the staging area (in preparation for a `git commit`), you can use the `rm --cached` command to remove them from the staging area but keep them in the working tree:
 
@@ -510,7 +510,7 @@ git rm --cached -r config/.
 
 When you `rm` files using `--cached`, they will remain in your working tree and will become "unstaged" changes.
 
-### I want to squash several commits into one (or more) commits.
+### Squash several commits into one (or more) commits.
 
 Your commit history is a representation or your personality. It is a manifestation of your self-respect and the respect you have for your team. As such, you will often need to rewrite your feature branch's history before merging it into `master`. This allows you to get rid of intermediary commit messages like, _"still working on it."_ and _"Meh, missed a bug."_. To do this, you can perform an "interactive rebase".
 
@@ -575,7 +575,7 @@ s f7ee6ab Woot, finally got this working.
 
 Once saved, `git` will prompt you to provide a cleaner commit message. And, once provided, your four shameful commits will be squashed down into a single, cohesive, meaningful commit.
 
-### I want to squash several commits into one commit without using `rebase`.
+### Squash several commits into one commit without using `rebase`.
 
 In the vast majority of cases, if your `git` workflow is clean and true and your feature branch is short-lived, an interactive rebase should be straightforward and pain-free. However, once you _make the mistake_ of periodically merging `master` into your feature branch, you are inviting a world of hurt. In such a case, you can use the `merge` command with the `--squash` modifier as an escape hatch.
 
@@ -611,7 +611,7 @@ git branch -D my-feature-backup
 
 > **ASIDE**: You should almost never need to do this. If you find yourself having to do this a lot; or, you find yourself dealing with a lot of "conflict resolution", you need to reevaluate your `git` workflow. Chances are, your feature branches are living way too long.
 
-### I want to temporarily set-aside my feature work.
+### Temporarily set-aside my feature work.
 
 The life of a developer is typically "interrupt driven". As such, there is often a need to briefly set aside your current work in order to attend to more pressing matters. In such a case, it is _tempting_ to use `git stash` and `git stash pop` to store pending changes. But, _do not do this_. Stashing code requires unnecessary mental overhead. Instead, simply commit the changes to your current feature branch and then perform an interactive rebase later on in order to clean up your commits:
 
@@ -642,7 +642,7 @@ git checkout master
 
 Now, your `master` branch should be back in a pristine state and your `temp-work` branch can be continued later.
 
-### I want to keep my changes during conflict resolution.
+### Keep my changes during conflict resolution.
 
 If your Git workflow is healthy - meaning that you have short-lived feature branches - conflicts should be very few and far between. In fact, I would assert that getting caught-up in frequent conflicts is an indication that something more fundamental to your workflow is primed for optimization.
 
